@@ -1,0 +1,22 @@
+.btnGr {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin-top: 30px;
+}
+
+.list {
+  margin-bottom: 5px;
+}
+
+ul {
+  list-style: none;
+
+  margin-top: 20px;
+}
+
+.start {
+  position: relative;
+  left: 50px;
+  top: 20px;
+}
