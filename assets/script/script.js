@@ -10,7 +10,7 @@ const inputStone = $("#inputStone");
 //
 const submit = $(".submit");
 //
-const startBtn = $(".start");
+const startBtn = $("#start");
 const resetBtn = $(".reset");
 // Game
 const nimGame = {
@@ -24,36 +24,35 @@ const nimGame = {
     // console.log(chooseStone);
     // console.log(oriStone);
     if (rand == 0) {
-      console.log("Bot turn 1: - Heap:", choose + 1);
+      console.log(`Bot turn: - Heap: ${choose + 1}`);
       _this.nStones.splice(choose, 1);
-      if (_this.nStones.length <= 1 && _this.nStones[choose] == 1) {
-        alert("Bot won!!!");
+      if (_this.nStones.length <= 1) {
+        alert("Player won!!!");
       } else {
         _this.render();
       }
     } else {
       if (chooseStone == oriStone) {
         _this.nStones.splice(choose, 1);
-        console.log(`Bot turn 2: - Heap: ${choose + 1} Stone: ${chooseStone}`);
-        if (_this.nStones.length <= 1 && _this.nStones[choose] == 1) {
-          alert("Bot won!!!");
+        console.log(`Bot turn: - Heap: ${choose + 1} Stone: ${chooseStone}`);
+        if (_this.nStones.length <= 1) {
+          if (_this.nStones[0].Stones == 1) {
+            alert("Bot won!!!");
+          } else {
+            alert("Player won!!!");
+          }
         } else {
           _this.render();
         }
       } else if (chooseStone != oriStone) {
         _this.nStones[choose].Stones -= chooseStone;
-        console.log(`Bot turn 3: - Heap: ${choose + 1} Stone: ${chooseStone}`);
-        if (_this.nStones.length <= 1 && _this.nStones[choose] == 1) {
+        console.log(`Bot turn: - Heap: ${choose + 1} Stone: ${chooseStone}`);
+        if (_this.nStones.length <= 1 && _this.nStones[choose].Stones == 1) {
           alert("Bot won!!!");
         } else {
           _this.render();
         }
       }
-
-      if (_this.nStones.length <= 1) {
-        alert("Bot won!!!");
-      }
-      _this.render();
     }
   },
   //   Handle clicks
@@ -61,6 +60,7 @@ const nimGame = {
     const _this = this;
     // Submit handle
     submit.onclick = () => {
+      const checkNum = isNaN(inputStone.value);
       const stone = Number(inputStone.value);
       const heap = Number(inputHeap.value);
       function checkStone() {
@@ -73,7 +73,9 @@ const nimGame = {
       const oriStone = checkStone();
       //   Case 1
       if (heap > 0) {
-        if (stone > 0 && stone != oriStone) {
+        if (stone > oriStone || stone < 0 || checkNum) {
+          alert("Please input a decent number");
+        } else if (stone > 0 && stone != oriStone) {
           let choose = inputHeap.value - 1;
           _this.nStones[choose].Stones -= stone;
           console.log(
@@ -98,12 +100,7 @@ const nimGame = {
           let choose = heap - 1;
           console.log(`Player turn: - Heap: ${heap} - Stones: ${stone}`);
           _this.nStones.splice(choose, 1);
-          const checkkk = _this.nStones[inputHeap.value - 1] === 1;
-          console.log(checkkk);
-          if (
-            _this.nStones.length <= 1 &&
-            _this.nStones[inputHeap.value - 1].Stones == 1
-          ) {
+          if (_this.nStones.length <= 1 && _this.nStones[0].Stones == 1) {
             alert("Player won!!!");
             _this.render();
           } else {
@@ -117,14 +114,16 @@ const nimGame = {
         else {
           let heap = Number(inputHeap.value);
           let choose = heap - 1;
-          console.log("Player turn: - Heap:", heap);
+          console.log(`Player turn: - Heap: ${heap}`);
           _this.nStones.splice(choose, 1);
-          if (
-            _this.nStones.length <= 1 &&
-            _this.nStones[inputHeap.value - 1].Stones == 1
-          ) {
-            alert("Player won!!!");
-            _this.render();
+          if (_this.nStones.length <= 1) {
+            if (_this.nStones[0].Stones == 1) {
+              alert("Player won!!!");
+              _this.render();
+            } else {
+              alert("Bot won!!!");
+              _this.render();
+            }
           } else {
             inputHeap.value = "";
             inputStone.value = "";
