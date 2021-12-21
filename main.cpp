@@ -1,16 +1,16 @@
 #include <iostream>
 
-int max(int col, int row)
+int max(int col, int row) // 1
 {
     return col > row ? col : row;
 }
 
-int rotateX(int col, int middle)
+int rotateX(int col, int middle) // 1
 {
     return middle - (col - (middle + 1));
 }
 
-int rotateY(int row, int middle)
+int rotateY(int row, int middle) // 1
 {
     return middle - (row - (middle + 1));
 }
@@ -33,11 +33,11 @@ int valueOf(int col, int row)
         rowEnd = i - 1;
         colEnd = i - 1;
 
-        if (row == 1 || col == colEnd)
+        if (row == 1 || col == colEnd + 1)
         {
             return col - row;
         }
-        else if (col == 1 || row == rowEnd)
+        else if (col == 1 || row == rowEnd + 1)
         {
             return row - col;
         }
